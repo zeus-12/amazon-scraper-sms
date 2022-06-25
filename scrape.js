@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 require("dotenv").config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-// const client = require("twilio")(accountSid, authToken);
+const client = require("twilio")(accountSid, authToken);
 
 //dummy values
 const fromNumber = 9876543210
@@ -34,12 +34,8 @@ async function scrape() {
     .replace(/[,.]/g, "");
   const priceNum = parseInt(price);
   product.price = priceNum;
+  
   //Send an SMS
-
-  if (priceNum) {
-    clearInterval(handle)
-  }
-
   if (priceNum && priceNum < moneyLimit) {
     client.messages
       .create({
